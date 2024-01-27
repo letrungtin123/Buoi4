@@ -1,19 +1,14 @@
 import React, { useEffect } from "react";
+
 import { useState } from "react";
 
-
-
-// interface Product {
-//   id: number;
-//   name: string;
-//   price: number;
-// }
 export interface Iusers {
   id: number;
   username: string;
   age: number;
   address: string;
 }
+
 const ListProductPage = () => {
   useEffect(() => {
     const fetchData = async () => {
@@ -28,17 +23,40 @@ const ListProductPage = () => {
     };
     fetchData();
   }, []);
+
   const [lists, setLists] = useState<Iusers[]>([]);
-  return <div className="flex flex-col mx-6 items-center justify-center text-4xl text-red-500">
-    {lists.map((value) => {
-      return <div key={value.id}>
-        {value.id}
-        {value.username}
-        {value.age}
-        {value.address}
-      </div>
-    })}
-  </div>;
+
+  return (
+    <div className="container mx-auto mt-8">
+      <table className="table-auto border-collapse w-full">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="border p-2">ID</th>
+            <th className="border p-2">Username</th>
+            <th className="border p-2">Age</th>
+            <th className="border p-2">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {lists.map((value) => (
+            <tr key={value.id} className="text-center">
+              <td className="border p-2">{value.id}</td>
+              <td className="border p-2">{value.username}</td>
+              <td className="border p-2">{value.age}</td>
+              <td className="border p-2">{value.address}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+export default ListProductPage;
+// interface Product {
+//   id: number;
+//   name: string;
+//   price: number;
+// }
 
 //   const arrayData: Product[] = [
 //     { id: 1, name: "iphone", price: 1000 },
@@ -164,6 +182,3 @@ const ListProductPage = () => {
 //       </div>
 //     </div>
 //   );
- };
-
- export default ListProductPage;
