@@ -8,9 +8,9 @@
     },
     {
       "id": "2",
-      "username": "user2",
-      "age": 30,
-      "address": "TPHN"
+      "username": "user22",
+      "address": "tphcm",
+      "age": 24
     },
     {
       "id": "3",
@@ -25,16 +25,10 @@
       "address": "tttttttttt"
     },
     {
-      "id": "d63f",
-      "username": "mm",
-      "age": 26,
-      "address": "tphcm"
-    },
-    {
-      "id": "1508",
-      "username": "hhhh",
-      "age": 13,
-      "address": "sdgsd"
+      "id": "8af9",
+      "username": "tinNNN",
+      "address": "TPHCMMM",
+      "age": 218
     }
   ]
 }

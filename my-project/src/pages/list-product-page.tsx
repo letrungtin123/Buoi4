@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import { Link } from 'react-router-dom';
 import { useState } from "react";
 
 export interface Iusers {
@@ -24,32 +25,91 @@ const ListProductPage = () => {
     fetchData();
   }, []);
 
-  const [lists, setLists] = useState<Iusers[]>([]);
+ const [lists, setLists] = useState<Iusers[]>([]);
 
+	const handleDeleteUser = async (idUser: number) => {
+		try {
+			const response = await fetch(
+				`http://localhost:3000/users/${idUser}`,
+				{
+					method: 'DELETE',
+				}
+			);
+			const users = await response.json();
+			console.log(' handleDeleteUser ~ users:', users);
+			const newLists = lists.filter((value) => value.id !== idUser);
+			setLists(newLists);
+		} catch (error) {
+			console.log(' handleDeleteUser ~ error:', error);
+		}
+	};
   return (
-    <div className="container mx-auto mt-8">
-      <table className="table-auto border-collapse w-full">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border p-2">ID</th>
-            <th className="border p-2">Username</th>
-            <th className="border p-2">Age</th>
-            <th className="border p-2">Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          {lists.map((value) => (
-            <tr key={value.id} className="text-center">
-              <td className="border p-2">{value.id}</td>
-              <td className="border p-2">{value.username}</td>
-              <td className="border p-2">{value.age}</td>
-              <td className="border p-2">{value.address}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+		<div className="">
+			{lists.map((value) => {
+				return (
+					<div
+						key={value.id}
+						className="mb-10 border  boder-b border-b-red-400 flex items-center justify-between"
+					>
+						<div>
+							<p>id:{value.id}</p>
+							<p>
+								username:
+								{value.username}
+							</p>
+							<p>
+								age:
+								{value.age}
+							</p>
+              <p>
+								address:
+								{value.address}
+							</p>
+						</div>
+
+						<div>
+							<Link
+								to={`/edit-product/${value.id}`}
+								className="bg-blue-400 py-2 px-4 rounded"
+							>
+								EDIT
+							</Link>
+							<button
+								onClick={() => handleDeleteUser(value.id)}
+								className="bg-red-400 py-2 px-4 rounded"
+							>
+								DELETE
+							</button>
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	);
+  // return (
+  //   <div className="container mx-auto mt-8">
+  //     <table className="table-auto border-collapse w-full">
+  //       <thead>
+  //         <tr className="bg-gray-200">
+  //           <th className="border p-2">ID</th>
+  //           <th className="border p-2">Username</th>
+  //           <th className="border p-2">Age</th>
+  //           <th className="border p-2">Address</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         {lists.map((value) => (
+  //           <tr key={value.id} className="text-center">
+  //             <td className="border p-2">{value.id}</td>
+  //             <td className="border p-2">{value.username}</td>
+  //             <td className="border p-2">{value.age}</td>
+  //             <td className="border p-2">{value.address}</td>
+  //           </tr>
+  //         ))}
+  //       </tbody>
+  //     </table>
+  //   </div>
+  // );
 };
 export default ListProductPage;
 // interface Product {
