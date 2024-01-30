@@ -1,10 +1,12 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import AddProductPage from './pages/add-product-page';
+import DashboardPage from './CSSTEST/dashboard-page';
 // import CountBuoi5 from './components/buoi5/count';
 import EditProductPage from './pages/edit-product-page';
 import LayoutDefault from './layouts/LayoutDefault';
 import ListProductPage from './pages/list-product-page';
+import LoginPage from './CSSTEST/login-page';
 
 // import LoginPage from './pages/login-page';
 // import TestCss from './pages/test-css';
@@ -28,6 +30,14 @@ const App = () => {
 					// path: '/edit-product/3',
 					path: '/edit-product/:id',
 					element: <EditProductPage />,
+				},
+				{
+					path: '/login',
+					element: <LoginPage />,
+				},
+				{
+					path: '/dashboard',
+					element: <DashboardPage />,
 				},
 				
 			],
