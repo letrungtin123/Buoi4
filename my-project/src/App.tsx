@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import AddProductPage from './pages/add-product-page';
@@ -7,6 +9,7 @@ import EditProductPage from './pages/edit-product-page';
 import LayoutDefault from './layouts/LayoutDefault';
 import ListProductPage from './pages/list-product-page';
 import LoginPage from './CSSTEST/login-page';
+import { ToastContainer } from 'react-toastify';
 
 // import LoginPage from './pages/login-page';
 // import TestCss from './pages/test-css';
@@ -49,7 +52,12 @@ const App = () => {
 		// },
 	]);
 
-	return <RouterProvider router={router} />;
+	return (
+		<>
+			<RouterProvider router={router} />
+			<ToastContainer />
+		</>
+	);
 };
 
 export default App;

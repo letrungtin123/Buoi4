@@ -1,46 +1,42 @@
 import React, { useEffect } from "react";
+import { deleteUser, getAllUsers } from '../apis/users.api';
 
+import { Iusers } from "../../interfaces/user.interface";
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 
-export interface Iusers {
-  id: number;
-  username: string;
-  age: number;
-  address: string;
-}
+// export interface Iusers {
+//   id: number;
+//   username: string;
+//   age: number;
+//   address: string;
+// }
 
 const ListProductPage = () => {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/users");
-        const users = await response.json();
-        setLists(users);
-        console.log("fetchdata ~ respone: ", users);
-      } catch (error) {
-        console.log("fetchdata ~ error: ", fetchData);
-      }
-    };
-    fetchData();
-  }, []);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				// call api thành công
+				const response = await getAllUsers();
+				console.log('fetchData ~ response:', response);
+				setLists(response.data);
+			} catch (error) {
+				console.log('fetchData ~ error:', error);
+				// call api thất bại
+			}
+		};
+		fetchData();
+	}, []);
 
- const [lists, setLists] = useState<Iusers[]>([]);
+	const [lists, setLists] = useState<Iusers[]>([]);
 
 	const handleDeleteUser = async (idUser: number) => {
 		try {
-			const response = await fetch(
-				`http://localhost:3000/users/${idUser}`,
-				{
-					method: 'DELETE',
-				}
-			);
-			const users = await response.json();
-			console.log(' handleDeleteUser ~ users:', users);
+			await deleteUser(idUser);
 			const newLists = lists.filter((value) => value.id !== idUser);
 			setLists(newLists);
 		} catch (error) {
-			console.log(' handleDeleteUser ~ error:', error);
+			console.log('handleDeleteUser ~ error:', error);
 		}
 	};
   return (

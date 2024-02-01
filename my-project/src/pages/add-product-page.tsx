@@ -1,83 +1,86 @@
+import { AxiosError } from 'axios';
+import { createUser } from "../apis/users.api";
+import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-interface IAddUser {
+interface Iusers {
   id: number;
   username: string;
   age: number;
   address: string;
 }
 
-const EditProductPage = () => {
+const AddProductPage = () => {
+  // router navigate
   const router = useNavigate();
+
   const [nameUser, setNameUser] = useState<string>("");
   const [addressUser, setAddressUser] = useState<string>("");
   const [ageUser, setAgeUser] = useState<number>(0);
 
-  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameUser = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNameUser(event.target.value);
   };
-  const handleChangeAddress = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleAddressUser = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddressUser(event.target.value);
   };
-  const handleChangeAge = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleAgeUser = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAgeUser(event.target.valueAsNumber);
   };
 
-  const handleOnSumit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const newProduct: Omit<IAddUser, "id"> = {
+      // omit: bỏ đi 1 thuộc tính nào đó của 1 object
+      const newUser: Omit<Iusers, "id"> = {
         username: nameUser,
         age: ageUser,
         address: addressUser,
       };
-      const response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newProduct),
-      });
-      await response.json();
+      await createUser(newUser);
+      toast.success('Wow so easy!');
+      // sau khi gửi dữ liệu thành công thì sẽ chuyển hướng về trang list-product
       router("/");
     } catch (error) {
-      console.log("handleOnSumit ~ error:", error);
+      console.log("🚀 ~ handleSubmitForm ~ error:", error);
+      toast.error((error as AxiosError).message);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
-      <div className="bg-white p-8 shadow-md rounded-md w-96">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Add New User</h1>
+    <div className="h-screen bg-gray-300 flex justify-center items-center">
+      <div className="flex flex-col items-center gap-4">
+        <h2 className="text-2xl font-bold">Thêm sản phẩm</h2>
         <form
-          onSubmit={(event) => handleOnSumit(event)}
-          className="flex flex-col gap-4 w-full"
+          onSubmit={(event) => handleSubmitForm(event)}
+          className="flex flex-col items-center gap-4 bg-white shadow-md rounded-lg p-4 w-[500px]"
         >
-          <h1>Username:</h1>
           <input
+            type="text"
+            className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
+            placeholder="user name"
             value={nameUser}
-            className="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
+            onChange={(event) => handleNameUser(event)}
+          />
+          <input
             type="text"
-            onChange={(event) => handleChangeName(event)}
-          />
-          <h1>Age:</h1>
-          <input
-            value={ageUser}
-            className="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
-            type="number"
-            placeholder="Age"
-            onChange={(event) => handleChangeAge(event)}
-          />
-          <h1>Address:</h1>
-          <input
+            className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
+            placeholder="address user"
             value={addressUser}
-            className="mt-1 p-3 w-full border rounded-md focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200"
-            type="text"
-            onChange={(event) => handleChangeAddress(event)}
+            onChange={(event) => handleAddressUser(event)}
           />
-          <button className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-800 focus:outline-none">
-            Add User
+          <input
+            type="number"
+            className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
+            placeholder="age user"
+            value={ageUser}
+            onChange={(event) => handleAgeUser(event)}
+          />
+          <button className="bg-blue-500 text-white p-2 w-full rounded-lg hover:bg-purple-500">
+            Thêm sản phẩm
           </button>
         </form>
       </div>
@@ -85,6 +88,4 @@ const EditProductPage = () => {
   );
 };
 
-
-
-export default EditProductPage;
+export default AddProductPage;
