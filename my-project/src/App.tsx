@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import AddProductPage from './pages/add-product-page';
+import AdminEditPage from './CSSTEST/admineditpage';
 import DashboardPage from './CSSTEST/dashboard-page';
 // import CountBuoi5 from './components/buoi5/count';
 import EditProductPage from './pages/edit-product-page';
@@ -41,6 +42,10 @@ const App = () => {
 				{
 					path: '/dashboard',
 					element: <DashboardPage />,
+				},
+				{
+					path: '/admineditpage',
+					element: <AdminEditPage />,
 				},
 				
 			],

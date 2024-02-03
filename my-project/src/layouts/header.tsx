@@ -7,6 +7,7 @@ const Header = () => {
       <a href="/edit-product" className="cursor-pointer ">What's new</a>
       <a href="/login" className="cursor-pointer ">Login</a>
       <a href="/dashboard" className="cursor-pointer ">Dashboard</a>
+      <a href="/admineditpage" className="cursor-pointer ">Admin Edit</a>
     </div>
   )
 }
