@@ -1,118 +1,145 @@
-import { getUserById, updateUser } from '../apis/users.api';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { getUserById, updateUser } from "../apis/users.api";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface Iusers {
-    id: number;
-    username: string;
-    age: number;
-    address: string;
-  }
+  id: number;
+  username: string;
+  age: number;
+  address: string;
+}
 
 const EditProductPage = () => {
-	const router = useNavigate();
-	// useParams: lấy params từ url
-	const { id: idParam } = useParams();
+  const router = useNavigate();
+  // useParams: lấy params từ url
+  const { id: idParam } = useParams();
 
-	const [userDetail, setUserDetail] = useState<Omit<Iusers, 'id'>>({
-		username: '',
-    address:'',
-		age: 0,
-	});
+  const [userDetail, setUserDetail] = useState<Omit<Iusers, "id">>({
+    username: "",
+    address: "",
+    age: 0,
+  });
 
-	useEffect(() => {
-		if (idParam) {
-			const fetchData = async () => {
-				try {
-					const response = await getUserById(idParam);
-					setUserDetail(response.data);
-				} catch (error) {
-					console.log('fetchData ~ error:', error);
-				}
-			};
-			fetchData();
-		}
-	}, [idParam]);
+  useEffect(() => {
+    if (idParam) {
+      const fetchData = async () => {
+        try {
+          const response = await getUserById(idParam);
+          setUserDetail(response.data);
+        } catch (error) {
+          console.log("fetchData ~ error:", error);
+        }
+      };
+      fetchData();
+    }
+  }, [idParam]);
 
-	const handleUsernameUser = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
-		setUserDetail({
-			...userDetail,
-			username: value,
-		});
-	};
+  const handleUsernameUser = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setUserDetail({
+      ...userDetail,
+      username: value,
+    });
+  };
   const handleAddressUser = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
-		setUserDetail({
-			...userDetail,
-			address: value,
-		});
-	};
-	const handleAgeUser = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.valueAsNumber;
-		setUserDetail({
-			...userDetail,
-			age: value,
-		});
-	};
+    const value = event.target.value;
+    setUserDetail({
+      ...userDetail,
+      address: value,
+    });
+  };
+  const handleAgeUser = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.valueAsNumber;
+    setUserDetail({
+      ...userDetail,
+      age: value,
+    });
+  };
 
-	const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		try {
-			// omit: bỏ đi 1 thuộc tính nào đó của 1 object
-			const newUser: Iusers = {
-				id: Number(idParam),
-				username: userDetail.username,
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      // omit: bỏ đi 1 thuộc tính nào đó của 1 object
+      const newUser: Iusers = {
+        id: Number(idParam),
+        username: userDetail.username,
         address: userDetail.address,
-				age: userDetail.age,
-			};
-			console.log('handleSubmitForm ~ newUser:', newUser);
-			const response = await updateUser(newUser);
-			console.log(' handleSubmitForm ~ response:', response);
-			// sau khi gửi dữ liệu thành công thì sẽ chuyển hướng về trang list-product
-			router('/');
-		} catch (error) {
-			console.log(' handleSubmitForm ~ error:', error);
-		}
-	};
+        age: userDetail.age,
+      };
+      console.log("handleSubmitForm ~ newUser:", newUser);
+      const response = await updateUser(newUser);
+      console.log(" handleSubmitForm ~ response:", response);
+      // sau khi gửi dữ liệu thành công thì sẽ chuyển hướng về trang list-product
+      router("/");
+    } catch (error) {
+      console.log(" handleSubmitForm ~ error:", error);
+    }
+  };
 
-	return (
-		// tsx
-		<div className="h-screen bg-gray-300 flex justify-center items-center">
-			<div className="flex flex-col items-center gap-4">
-				<h2 className="text-2xl font-bold">Sửa sản phẩm</h2>
-				<form
-					onSubmit={(event) => handleSubmitForm(event)}
-					className="flex flex-col items-center gap-4 bg-white shadow-md rounded-lg p-4 w-[500px]"
-				>
-					<input
-						type="text"
-						className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
-						placeholder="username"
-						value={userDetail.username}
-						onChange={(event) => handleUsernameUser(event)}
-					/>
-          <input
-						type="text"
-						className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
-						placeholder="address user"
-						value={userDetail.address}
-						onChange={(event) => handleAddressUser(event)}
-					/>
-					<input
-						type="number"
-						className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
-						placeholder="age user"
-						value={userDetail.age}
-						onChange={(event) => handleAgeUser(event)}
-					/>
-					<button className="bg-blue-500 text-white p-2 w-full rounded-lg hover:bg-purple-500">
-						Sửa sản phẩm
-					</button>
-				</form>
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className="w-0.5/3 bg-white p-6 text-red-700 border-r border-black-800">
+        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+        <ul className="mb-4">
+          <li className="mb-2">User Details</li>
+          <ul className="pl-4">
+            <li className="mb-2 bg-red-600 text-white border-r rounded">
+              Admin
+            </li>
+          </ul>
+          <li className="mb-2 ">Executive Details</li>
+          <ul className="pl-4">
+            <li className="mb-2 bg-red-600 text-white border-r rounded">
+              Executive
+            </li>
+          </ul>
+        </ul>
+        {/*Thêm nội dung sidebar ở đây nếu cần*/}
+      </div>
+      {/* Content */}
+      <div className="w-2.2/3 p-6 border-l border-gray-700">
+        <h2 className="text-2xl font-bold mb-4">Edit User</h2>
+        <form
+          onSubmit={(event) => handleSubmitForm(event)}
+        >
+          <div>
+            <p>Name: </p>
+            <input
+              type="text"
+              className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
+              placeholder="username"
+              value={userDetail.username}
+              onChange={(event) => handleUsernameUser(event)}
+            />
+          </div>
+          <div>
+            <p>Age:</p>
+            <input
+              type="number"
+              className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
+              placeholder="age user"
+              value={userDetail.age}
+              onChange={(event) => handleAgeUser(event)}
+            />
+          </div>
+          <div>
+            <p>Address:</p>
+            <input
+              type="text"
+              className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
+              placeholder="address user"
+              value={userDetail.address}
+              onChange={(event) => handleAddressUser(event)}
+            />
+          </div>
+          <button className="bg-red-500 text-white p-2 w-full rounded-lg hover:bg-red-800">
+            Edit
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default EditProductPage;

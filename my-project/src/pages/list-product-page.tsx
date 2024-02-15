@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { deleteUser, getAllUsers } from '../apis/users.api';
+import { deleteUser, getAllUsers } from "../apis/users.api";
 
 import { Iusers } from "../../interfaces/user.interface";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 // export interface Iusers {
@@ -13,75 +13,94 @@ import { useState } from "react";
 // }
 
 const ListProductPage = () => {
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				// call api thành công
-				const response = await getAllUsers();
-				console.log('fetchData ~ response:', response);
-				setLists(response.data);
-			} catch (error) {
-				console.log('fetchData ~ error:', error);
-				// call api thất bại
-			}
-		};
-		fetchData();
-	}, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // call api thành công
+        const response = await getAllUsers();
+        console.log("fetchData ~ response:", response);
+        setLists(response.data);
+      } catch (error) {
+        console.log("fetchData ~ error:", error);
+        // call api thất bại
+      }
+    };
+    fetchData();
+  }, []);
 
-	const [lists, setLists] = useState<Iusers[]>([]);
+  const [lists, setLists] = useState<Iusers[]>([]);
 
-	const handleDeleteUser = async (idUser: number) => {
-		try {
-			await deleteUser(idUser);
-			const newLists = lists.filter((value) => value.id !== idUser);
-			setLists(newLists);
-		} catch (error) {
-			console.log('handleDeleteUser ~ error:', error);
-		}
-	};
+  const handleDeleteUser = async (idUser: number) => {
+    try {
+      await deleteUser(idUser);
+      const newLists = lists.filter((value) => value.id !== idUser);
+      setLists(newLists);
+    } catch (error) {
+      console.log("handleDeleteUser ~ error:", error);
+    }
+  };
   return (
-		<div className="">
-			{lists.map((value) => {
-				return (
-					<div
-						key={value.id}
-						className="mb-10 border  boder-b border-b-red-400 flex items-center justify-between"
-					>
-						<div>
-							<p>id:{value.id}</p>
-							<p>
-								username:
-								{value.username}
-							</p>
-							<p>
-								age:
-								{value.age}
-							</p>
-              <p>
-								address:
-								{value.address}
-							</p>
-						</div>
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className="w-0.5/3 bg-white p-6 text-red-700 border-r border-black-800">
+        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+        <ul className="mb-4">
+          <li className="mb-2">User Details</li>
+          <ul className="pl-4">
+            <li className="mb-2 bg-red-600 text-white border-r rounded">
+              Admin
+            </li>
+          </ul>
+          <li className="mb-2 ">Executive Details</li>
+          <ul className="pl-4">
+            <li className="mb-2 bg-red-600 text-white border-r rounded">
+              Executive
+            </li>
+          </ul>
+        </ul>
+        {/*Thêm nội dung sidebar ở đây nếu cần*/}
+      </div>
 
-						<div>
-							<Link
-								to={`/edit-product/${value.id}`}
-								className="bg-blue-400 py-2 px-4 rounded"
-							>
-								EDIT
-							</Link>
-							<button
-								onClick={() => handleDeleteUser(value.id)}
-								className="bg-red-400 py-2 px-4 rounded"
-							>
-								DELETE
-							</button>
-						</div>
-					</div>
-				);
-			})}
-		</div>
-	);
+      {/* Main Content */}
+      <div className="w-2/3 p-6 border-l border-gray-700">
+        <h2 className="text-2xl font-bold mb-4">User List</h2>
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="border bg-red-500 text-white">ID</th>
+              <th className="border bg-red-500 text-white">Username</th>
+              <th className="border bg-red-500 text-white">Age</th>
+              <th className="border bg-red-500 text-white">Address</th>
+              <th className="border bg-red-500 text-white">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lists.map((value) => (
+              <tr key={value.id}>
+                <td className="border border-gray-300 text-center">{value.id}</td>
+                <td className="border border-gray-300 text-center">{value.username}</td>
+                <td className="border border-gray-300 text-center">{value.age}</td>
+                <td className="border border-gray-300 text-center">{value.address}</td>
+                <td className="border border-gray-300 text-center">
+                  <div className="flex justify-center">
+                    <Link to={`/edit-product/${value.id}`} className="btn-edit bg-green-600 rounded text-white py-2 px-4 hover:bg-green-800">
+                      EDIT
+                    </Link>
+                    <button
+                      onClick={() => handleDeleteUser(value.id)}
+                      className="btn-delete bg-red-500 rounded text-white py-2 px-4 hover:bg-red-800" 
+                    >
+                      DELETE
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
   // return (
   //   <div className="container mx-auto mt-8">
   //     <table className="table-auto border-collapse w-full">

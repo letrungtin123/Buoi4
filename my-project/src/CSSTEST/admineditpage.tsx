@@ -39,7 +39,7 @@ const AdminEditPage = () => {
             />
           </div>
           <div>
-            <p>Mobile Number</p>
+            <p>Age:</p>
             <input
               type="text"
               className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
@@ -47,19 +47,11 @@ const AdminEditPage = () => {
             />
           </div>
           <div>
-            <p>Email Address</p>
+            <p>Address:</p>
             <input
               type="text"
               className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
               placeholder="Email Address"
-            />
-          </div>
-          <div>
-            <p>Password</p>
-            <input
-              type="text"
-              className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
-              placeholder="Password"
             />
           </div>
           <button className="bg-red-500 text-white p-2 w-full rounded-lg hover:bg-red-950">
