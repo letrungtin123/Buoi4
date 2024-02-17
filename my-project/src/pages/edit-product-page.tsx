@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface Iusers {
-  id: number;
+  id: string;
   username: string;
   age: number;
   address: string;
@@ -61,7 +61,7 @@ const EditProductPage = () => {
     try {
       // omit: bỏ đi 1 thuộc tính nào đó của 1 object
       const newUser: Iusers = {
-        id: Number(idParam),
+        id: String(idParam),
         username: userDetail.username,
         address: userDetail.address,
         age: userDetail.age,
@@ -72,7 +72,7 @@ const EditProductPage = () => {
       // sau khi gửi dữ liệu thành công thì sẽ chuyển hướng về trang list-product
       router("/");
     } catch (error) {
-      console.log(" handleSubmitForm ~ error:", error);
+      console.log(" handleSubmitForm ~ error:", error);     
     }
   };
 
@@ -100,9 +100,7 @@ const EditProductPage = () => {
       {/* Content */}
       <div className="w-2.2/3 p-6 border-l border-gray-700">
         <h2 className="text-2xl font-bold mb-4">Edit User</h2>
-        <form
-          onSubmit={(event) => handleSubmitForm(event)}
-        >
+        <form onSubmit={(event) => handleSubmitForm(event)}>
           <div>
             <p>Name: </p>
             <input

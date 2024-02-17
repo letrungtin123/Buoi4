@@ -1,11 +1,11 @@
-import { AxiosError } from 'axios';
+import { AxiosError } from "axios";
 import { createUser } from "../apis/users.api";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 interface Iusers {
-  id: number;
+  id: string;
   username: string;
   age: number;
   address: string;
@@ -41,7 +41,7 @@ const AddProductPage = () => {
         address: addressUser,
       };
       await createUser(newUser);
-      toast.success('Wow so easy!');
+      toast.success("Wow so easy!");
       // sau khi gửi dữ liệu thành công thì sẽ chuyển hướng về trang list-product
       router("/");
     } catch (error) {
@@ -51,12 +51,30 @@ const AddProductPage = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-300 flex justify-center items-center">
-      <div className="flex flex-col items-center gap-4">
-        <h2 className="text-2xl font-bold">Thêm sản phẩm</h2>
-        <form
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className="w-0.5/3 bg-white p-6 text-red-700 border-r border-black-800">
+        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+        <ul className="mb-4">
+          <li className="mb-2">User Details</li>
+          <ul className="pl-4">
+            <li className="mb-2 bg-red-600 text-white border-r rounded">
+              Admin
+            </li>
+          </ul>
+          <li className="mb-2 ">Executive Details</li>
+          <ul className="pl-4">
+            <li className="mb-2 bg-red-600 text-white border-r rounded">
+              Executive
+            </li>
+          </ul>
+        </ul>
+        {/*Thêm nội dung sidebar ở đây nếu cần*/}
+      </div>
+      <div className="w-full">
+        <form 
           onSubmit={(event) => handleSubmitForm(event)}
-          className="flex flex-col items-center gap-4 bg-white shadow-md rounded-lg p-4 w-[500px]"
+          className="flex flex-col items-center mt-10 gap-4 bg-white shadow-md rounded-lg "
         >
           <input
             type="text"
@@ -79,7 +97,7 @@ const AddProductPage = () => {
             value={ageUser}
             onChange={(event) => handleAgeUser(event)}
           />
-          <button className="bg-blue-500 text-white p-2 w-full rounded-lg hover:bg-purple-500">
+          <button className="bg-red-500 text-white p-2 w-full rounded-lg hover:bg-red-800">
             Thêm sản phẩm
           </button>
         </form>
