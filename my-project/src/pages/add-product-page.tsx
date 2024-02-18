@@ -71,11 +71,13 @@ const AddProductPage = () => {
         </ul>
         {/*Thêm nội dung sidebar ở đây nếu cần*/}
       </div>
-      <div className="w-full">
+      <div className="w-full h-screen flex-1 p-5">
         <form 
           onSubmit={(event) => handleSubmitForm(event)}
           className="flex flex-col items-center mt-10 gap-4 bg-white shadow-md rounded-lg "
         >
+          <div className="mb-6 mx-auto w-full">
+            <h2 className="block mb-2 font-medium">Username:</h2>
           <input
             type="text"
             className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
@@ -83,6 +85,9 @@ const AddProductPage = () => {
             value={nameUser}
             onChange={(event) => handleNameUser(event)}
           />
+          </div>
+          <div className="mb-6 mx-auto w-full">
+          <h2 className="block mb-2 font-medium">Address:</h2>
           <input
             type="text"
             className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
@@ -90,6 +95,9 @@ const AddProductPage = () => {
             value={addressUser}
             onChange={(event) => handleAddressUser(event)}
           />
+          </div>
+          <div className="mb-6 mx-auto w-full">
+          <h2 className="block mb-2 font-medium">Age:</h2>
           <input
             type="number"
             className="border rounded-lg w-full py-2 px-2 outline-none focus:border-gray-400"
@@ -97,6 +105,7 @@ const AddProductPage = () => {
             value={ageUser}
             onChange={(event) => handleAgeUser(event)}
           />
+          </div>
           <button className="bg-red-500 text-white p-2 w-full rounded-lg hover:bg-red-800">
             Thêm sản phẩm
           </button>
