@@ -30,7 +30,7 @@ const ListProductPage = () => {
 
   const [lists, setLists] = useState<Iusers[]>([]);
 
-  const handleDeleteUser = async (idUser: number) => {
+  const handleDeleteUser = async (idUser: string | number) => {
     try {
       await deleteUser(idUser);
       const newLists = lists.filter((value) => value.id !== idUser);
