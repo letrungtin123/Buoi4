@@ -72,7 +72,7 @@ const EditProductPage = () => {
       // sau khi gửi dữ liệu thành công thì sẽ chuyển hướng về trang list-product
       router("/");
     } catch (error) {
-      console.log(" handleSubmitForm ~ error:", error);     
+      console.log(" handleSubmitForm ~ error:", error);
     }
   };
 

@@ -1,19 +1,19 @@
 import { Iusers } from "../../interfaces/user.interface";
 
-interface IinitialData {
-    
+interface IinitialInputData {
+  newUser: Omit<Iusers, 'id'>;
 }
 export const initialUser: Omit<Iusers, "id"> = {
   username: "",
   address: "",
   age: 0,
 };
-export const initialData = () => {
+export const initialInputData =  ({ newUser }: IinitialInputData) => {
     const initial = [
         {
           id: 'username',
           name:'name',
-          title:'Username',
+          title:'Username:',
           value:newUser.username,
           placeholder:'Username',
       
@@ -21,7 +21,7 @@ export const initialData = () => {
         {
           id: 'address',
           name:'address',
-          title:'Address',
+          title:'Address:',
           value:newUser.address,
           placeholder:'Address',
       
@@ -29,10 +29,12 @@ export const initialData = () => {
         {
           id: 'age',
           name:'age',
-          title:'Age',
+          title:'Age:',
           value:newUser.age,
           placeholder:'Age',
       
         },
       ]
+      return initial;
 };
+export default IinitialInputData;

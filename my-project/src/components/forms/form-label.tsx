@@ -6,7 +6,7 @@ interface IFormLabelProps {
 }
 const FormLabel = ({title,id}:IFormLabelProps) => {
   return (
-    <label htmlFor={id} className="block mb-2 font-medium">
+    <label htmlFor={id} >
       {title}
     </label>
   );
