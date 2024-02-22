@@ -1,4 +1,4 @@
-import { FormGroup, Input } from '@/components'
+import { FormGroup, Input } from '@/components/buttons'
 
 import Logo from '../../../public/logo.svg'
 

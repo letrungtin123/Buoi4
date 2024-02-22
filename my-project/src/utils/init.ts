@@ -12,7 +12,7 @@ export const initialInputData =  ({ newUser }: IinitialInputData) => {
     const initial = [
         {
           id: 'username',
-          name:'name',
+          name:'username',
           title:'Username:',
           value:newUser.username,
           placeholder:'Username',
